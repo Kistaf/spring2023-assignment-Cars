@@ -28,7 +28,7 @@ class MemberServiceH2Test {
 
     @BeforeEach
     void setUp() {
-        if (!dataIsReady) {  //Explain this
+        if (!dataIsReady) {
             memberRepository.save(new Member("m1", "test12", "m1@a.dk", "bb", "Olsen", "test vej 34", "Lyngby", "2800"));
             memberRepository.save(new Member("m2", "test12", "m2@a.dk", "aa", "hansen", "test vej 34", "Lyngby", "2800"));
             dataIsReady = true;
