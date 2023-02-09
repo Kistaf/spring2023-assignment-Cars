@@ -1,6 +1,9 @@
 package dat3.car.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,12 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Member {
 
-    public Member() {
-
-    }
     public Member(String user, String password, String email,
                   String firstName, String lastName, String street, String city, String zip) {
         this.username = user;
@@ -42,7 +45,7 @@ public class Member {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column()
     private String password;
 
     @Column(nullable = false)
