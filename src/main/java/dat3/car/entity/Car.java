@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -44,4 +46,8 @@ public class Car {
 
     @UpdateTimestamp()
     private LocalDateTime lastEdited;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reserved_car")
+    private List<Reservation> reservations = new ArrayList<>();
+
 }

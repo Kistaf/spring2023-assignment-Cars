@@ -2,20 +2,28 @@ package dat3.car.config;
 
 import dat3.car.entity.Car;
 import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
 import dat3.car.repositories.CarRepository;
 import dat3.car.repositories.MemberRepository;
+import dat3.car.repositories.ReservationRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 public class DeveloperData implements ApplicationRunner {
 
     CarRepository carRepository;
     MemberRepository memberRepository;
-    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository) {
+    ReservationRepository reservationRepository;
+
+    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
         this.carRepository = carRepository;
         this.memberRepository = memberRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -35,20 +43,13 @@ public class DeveloperData implements ApplicationRunner {
         car2.setBestDiscount(600000);
         carRepository.save(car2);
 
-        Member member = new Member("Test2", "Test", "Test@Test.test", "Test", "Test", "Test_Street", "Test", "Test");
-
-        // A relation table of name "member_favorite_car_colors" was added.
-        // This way the primary key of a member can be used to select the favorite colors for the given member
-        // from the newly created table, which contains a foreign key (member primary key).
-        member.addFavoriteColor("Yellow");
-        member.addFavoriteColor("Green");
-
-        // The same as above changed.
-        // A relation table of name "member_phones" was added.
-        // Once again, we can use the same approach as above. We can select the phone numbers of a member through the
-        // primary key, which has been stored as a foreign key in the "member_phones" table.
-        member.addPhoneNumber("Mobile", "12345");
-        member.addPhoneNumber("Work", "45678");
+        Member member = new Member("Test1", "Test", "Test@Test.test", "Test", "Test", "Test_Street", "Test", "Test");
+        Member member2 = new Member("Test2", "Test", "Test@Test.test", "Test", "Test", "Test_Street", "Test", "Test");
         memberRepository.save(member);
+        memberRepository.save(member2);
+        Reservation reservation = new Reservation(LocalDate.now(), LocalDate.now(), member, car1);
+        Reservation reservation2 = new Reservation(LocalDate.now(), LocalDate.now(), member2, car2);
+        reservationRepository.save(reservation);
+        reservationRepository.save(reservation2);
     }
 }

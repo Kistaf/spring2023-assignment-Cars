@@ -24,8 +24,13 @@ public class MemberService {
         return response;
     }
 
+    public MemberResponse getMemberByUsername(String username, boolean includeAll) {
+        Member member = memberRepository.findById(username).get();
+        MemberResponse response = new MemberResponse(member, includeAll);
+        return response;
+    }
+
     public MemberResponse addMember(MemberRequest memberRequest) {
-        //Later you should add error checks --> Missing arguments, email taken etc.
         if (memberRepository.existsById(memberRequest.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member with this ID already exist");
         }
@@ -38,5 +43,15 @@ public class MemberService {
 
         return new MemberResponse(newMember, false);
     }
+
+    public boolean deleteMemberByUsername(String username) {
+        try {
+            memberRepository.deleteById(username);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
 }

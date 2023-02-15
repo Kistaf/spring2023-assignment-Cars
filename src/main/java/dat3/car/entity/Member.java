@@ -9,9 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -22,7 +20,7 @@ public class Member {
     public Member(String user, String password, String email,
                   String firstName, String lastName, String street, String city, String zip) {
         this.username = user;
-        this.password= password;
+        this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,14 +28,6 @@ public class Member {
         this.city = city;
         this.zip = zip;
     }
-
-    @ElementCollection
-    List<String> favoriteCarColors = new ArrayList<>();
-
-    @ElementCollection
-    @MapKeyColumn(name = "description")
-    @Column(name = "phone_number")
-    Map<String, String> phones = new HashMap<>();
 
     @Id
     private String username;
@@ -75,11 +65,7 @@ public class Member {
     @UpdateTimestamp()
     private LocalDateTime lastEdited;
 
-    public void addFavoriteColor(String color) {
-        this.favoriteCarColors.add(color);
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
+    private List<Reservation> reservations = new ArrayList<>();
 
-    public void addPhoneNumber(String type, String mobile) {
-        this.phones.put(type, mobile);
-    }
 }

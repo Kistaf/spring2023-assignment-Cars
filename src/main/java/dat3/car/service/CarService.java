@@ -54,6 +54,8 @@ public class CarService {
 
 
     public CarResponse updateCar(CarRequest body) {
+        // Use Optional in the future to only change the values of a car, where the value has been changed.
+
         if (!carRepository.existsById(body.getId())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No car with the given ID exists");
         }

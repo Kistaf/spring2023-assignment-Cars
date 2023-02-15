@@ -26,6 +26,7 @@ public class CarResponse {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime lastEdited;
 
+
     public CarResponse(Car c, boolean includeAll) {
         this.id = c.getId();
         this.brand = c.getBrand();
