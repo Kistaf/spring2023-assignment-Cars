@@ -29,29 +29,29 @@ class ReservationServiceMockitoTest {
 
     @Mock
     ReservationRepository reservationRepository;
-
     @Mock
     MemberRepository memberRepository;
-
     @Mock
     CarRepository carRepository;
-
     ReservationService reservationService;
+
+    Car car;
+    Member member;
 
     @BeforeEach
     void setUp() {
-        reservationService = new ReservationService(reservationRepository, memberRepository, carRepository);
-    }
-
-    @Test
-    void newReservation() {
-        Member member = new Member("Test_user", "Test", "Test@Test.test", "Test", "Test", "Test_Street", "Test", "Test");
-        Car car = new Car();
+        member = new Member("Test_user", "Test", "Test@Test.test", "Test", "Test", "Test_Street", "Test", "Test");
+        car = new Car();
         car.setId(1L);
         car.setBrand("Mercedes");
         car.setModel("C63 AMG");
         car.setPricePrDay(13000);
         car.setBestDiscount(800000);
+        reservationService = new ReservationService(reservationRepository, memberRepository, carRepository);
+    }
+
+    @Test
+    void newReservation() {
         Mockito.when(memberRepository.findById(any(String.class))).thenReturn(Optional.of(member));
         Mockito.when(carRepository.findById(any(Long.class))).thenReturn(Optional.of(car));
         Reservation reservation = new Reservation(LocalDate.of(2023, 02, 15), LocalDate.now(), member, car);
@@ -63,13 +63,6 @@ class ReservationServiceMockitoTest {
 
     @Test
     void testReservationBeforeCurrentDate() {
-        Member member = new Member("Test_user", "Test", "Test@Test.test", "Test", "Test", "Test_Street", "Test", "Test");
-        Car car = new Car();
-        car.setId(1L);
-        car.setBrand("Mercedes");
-        car.setModel("C63 AMG");
-        car.setPricePrDay(13000);
-        car.setBestDiscount(800000);
         Mockito.when(memberRepository.findById(any(String.class))).thenReturn(Optional.of(member));
         Mockito.when(carRepository.findById(any(Long.class))).thenReturn(Optional.of(car));
         ReservationRequest request = new ReservationRequest(member.getUsername(), car.getId(), LocalDate.of(2023, 02, 12), LocalDate.now());
@@ -78,13 +71,6 @@ class ReservationServiceMockitoTest {
 
     @Test
     void carUnavailable() {
-        Member member = new Member("Test_user", "Test", "Test@Test.test", "Test", "Test", "Test_Street", "Test", "Test");
-        Car car = new Car();
-        car.setId(1L);
-        car.setBrand("Mercedes");
-        car.setModel("C63 AMG");
-        car.setPricePrDay(13000);
-        car.setBestDiscount(800000);
         Car carMocked = Mockito.mock(Car.class);
         Member memberMocked = Mockito.mock(Member.class);
         Mockito.when(memberRepository.findById(any(String.class))).thenReturn(Optional.of(memberMocked));
