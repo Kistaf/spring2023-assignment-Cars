@@ -41,7 +41,6 @@ class MemberServiceH2Test {
     void getMembers() {
         List<MemberResponse> members = memberService.getMembers(true);
         assertEquals(2, members.size());
-        assertNotNull(members.get(0).getCreated());
     }
 
     @Test

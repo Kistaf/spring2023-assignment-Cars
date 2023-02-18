@@ -54,11 +54,11 @@ class ReservationServiceMockitoTest {
     void newReservation() {
         Mockito.when(memberRepository.findById(any(String.class))).thenReturn(Optional.of(member));
         Mockito.when(carRepository.findById(any(Long.class))).thenReturn(Optional.of(car));
-        Reservation reservation = new Reservation(LocalDate.of(2023, 02, 15), LocalDate.now(), member, car);
+        Reservation reservation = new Reservation(LocalDate.of(2023, 04, 15), LocalDate.now(), member, car);
         Mockito.when(reservationRepository.save(any())).thenReturn(reservation);
-        ReservationRequest request = new ReservationRequest("Test_user", 1l, LocalDate.of(2023, 02, 15), LocalDate.now());
+        ReservationRequest request = new ReservationRequest("Test_user", 1l, LocalDate.of(2023, 04, 15), LocalDate.now());
         ReservationResponse res = reservationService.newReservation(request);
-        assertEquals(LocalDate.of(2023, 02, 15), res.getReservationDate());
+        assertEquals(LocalDate.of(2023, 04, 15), res.getReservationDate());
     }
 
     @Test
@@ -75,10 +75,39 @@ class ReservationServiceMockitoTest {
         Member memberMocked = Mockito.mock(Member.class);
         Mockito.when(memberRepository.findById(any(String.class))).thenReturn(Optional.of(memberMocked));
         Mockito.when(carRepository.findById(any(Long.class))).thenReturn(Optional.of(carMocked));
-        Reservation reservation = new Reservation(LocalDate.of(2023, 02, 15), LocalDate.now(), member, car);
-        Reservation reservation2 = new Reservation(LocalDate.of(2023, 02, 17), LocalDate.now(), member, car);
+        Reservation reservation = new Reservation(LocalDate.of(2023, 04, 15), LocalDate.now(), member, car);
+        Reservation reservation2 = new Reservation(LocalDate.of(2023, 04, 17), LocalDate.now(), member, car);
         Mockito.when(carMocked.getReservations()).thenReturn(List.of(reservation, reservation2));
-        ReservationRequest request = new ReservationRequest(member.getUsername(), car.getId(), LocalDate.of(2023, 02, 15), LocalDate.now());
+        ReservationRequest request = new ReservationRequest(member.getUsername(), car.getId(), LocalDate.of(2023, 04, 15), LocalDate.now());
         assertThrows(ResponseStatusException.class, () -> reservationService.newReservation(request));
     }
+
+    @Test
+    void findAllReservationsByUsername() {
+        Car car2 = new Car();
+        car2.setId(2L);
+        car2.setBrand("Mercedes");
+        car2.setModel("C63 AMG");
+        car2.setPricePrDay(13000);
+        car2.setBestDiscount(800000);
+        Reservation reservation1 = new Reservation(LocalDate.now(), LocalDate.now(), member, car);
+        Reservation reservation2 = new Reservation(LocalDate.now(), LocalDate.now(), member, car2);
+        Mockito.when(reservationRepository.findReservationsByUsername(any(String.class))).thenReturn(List.of(reservation1, reservation2));
+        assertEquals(2, reservationService.findAllByMember("Test_user").size());
+    }
+
+    @Test
+    void numberOfReservationsByUsername() {
+        Car car2 = new Car();
+        car2.setId(2L);
+        car2.setBrand("Mercedes");
+        car2.setModel("C63 AMG");
+        car2.setPricePrDay(13000);
+        car2.setBestDiscount(800000);
+        Reservation reservation1 = new Reservation(LocalDate.now(), LocalDate.now(), member, car);
+        Reservation reservation2 = new Reservation(LocalDate.now(), LocalDate.now(), member, car2);
+        Mockito.when(reservationRepository.countReservationsByUsername(any(String.class))).thenReturn(List.of(reservation1, reservation2).size());
+        assertEquals(2, reservationService.countMemberReservations("Test_user"));
+    }
+
 }

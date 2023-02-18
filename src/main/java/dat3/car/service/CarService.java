@@ -64,4 +64,28 @@ public class CarService {
         return new CarResponse(toChange, false);
     }
 
+    public List<CarResponse> carsByBrandAndModel(String brand, String model) {
+        List<CarResponse> cars = carRepository.findCarsByBrandAndModel(brand, model)
+                .stream()
+                .map(car -> new CarResponse(car, false))
+                .toList();
+        return cars;
+    }
+
+    public List<CarResponse> carsNotReserved() {
+        List<CarResponse> cars = carRepository.findAllCarsWithEmptyReservations()
+                .stream()
+                .map(car -> new CarResponse(car, false))
+                .toList();
+        return cars;
+    }
+
+    public List<CarResponse> findCarsByBestDiscount(int lowerBound) {
+        List<CarResponse> cars = carRepository.findAllByDiscountGreaterThan(lowerBound)
+                .stream()
+                .map(car -> new CarResponse(car, true))
+                .toList();
+        return cars;
+    }
+
 }

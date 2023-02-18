@@ -3,10 +3,7 @@ package dat3.car.api;
 import dat3.car.dto.Car.CarRequest;
 import dat3.car.dto.Car.CarResponse;
 import dat3.car.service.CarService;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,6 +27,21 @@ public class CarController {
     @GetMapping("/{id}")
     CarResponse getCarById(@PathVariable Long id) {
         return carService.getCarById(id, false);
+    }
+
+    @GetMapping("/filter")
+    List<CarResponse> getCarsByBrandAndId(@RequestParam("brand") String brand, @RequestParam("model") String model) {
+        return carService.carsByBrandAndModel(brand, model);
+    }
+
+    @GetMapping("not-reserved")
+    List<CarResponse> getCarsNotReserved() {
+        return carService.carsNotReserved();
+    }
+
+    @GetMapping("bestDiscount")
+    List<CarResponse> getCarsByBestDiscount(@RequestParam int lowerBound) {
+        return carService.findCarsByBestDiscount(lowerBound);
     }
 
     // ADMIN

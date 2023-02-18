@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="margin: 0; padding: 0;">
+<table style="width: 100vw; background-color: beige" id="table-content">
+    <thead>
+    <tr>
+        <th>Car ID</th>
+        <th>Car Brand</th>
+        <th>Car Model</th>
+        <th>Car PricePrDay</th>
+    </tr>
+    </thead>
+    <tbody id="table-body">
+    </tbody>
+</table>
+
+<script lang="js">
+    const fetchCars = () => {
+        fetch("http://localhost:8080/api/cars", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(async (res) => {
+            const data = await res.json();
+            let tableBody = document.getElementById("table-body");
+            data.forEach(car => {
+                let newRow = tableBody.insertRow();
+                newRow.insertCell(0).appendChild(document.createTextNode(`${car.id}`))
+                newRow.insertCell(1).appendChild(document.createTextNode(`${car.brand}`))
+                newRow.insertCell(2).appendChild(document.createTextNode(`${car.model}`))
+                newRow.insertCell(3).appendChild(document.createTextNode(`${car.pricePrDay}`))
+            })
+        }).catch(() => {
+            console.log("something went wrong")
+        })
+    }
+    window.onload = () => {
+        fetchCars()
+    };
+</script>
+</body>
+</html>

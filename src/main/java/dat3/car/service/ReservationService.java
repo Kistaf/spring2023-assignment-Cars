@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,5 +51,17 @@ public class ReservationService {
         Reservation newReservation = new Reservation(body.getReservationDate(), body.getRentalDate(), member.get(), car);
         Reservation res = reservationRepository.save(newReservation);
         return new ReservationResponse(res);
+    }
+
+    public List<ReservationResponse> findAllByMember(String username) {
+        List<ReservationResponse> reservations = reservationRepository.findReservationsByUsername(username)
+                .stream()
+                .map(res -> new ReservationResponse(res))
+                .toList();
+        return reservations;
+    }
+
+    public int countMemberReservations(String username) {
+        return reservationRepository.countReservationsByUsername(username);
     }
 }

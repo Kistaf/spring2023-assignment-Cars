@@ -30,6 +30,7 @@ class MemberController {
         return memberService.getMemberByUsername(username, false);
     }
 
+
     // ANONYMOUS
     @PostMapping()
     MemberResponse addMember(@RequestBody MemberRequest body) {

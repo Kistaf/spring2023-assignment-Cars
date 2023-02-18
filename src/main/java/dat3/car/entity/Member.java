@@ -1,5 +1,6 @@
 package dat3.car.entity;
 
+import dat3.security.entity.UserWithRoles;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Member {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
+public class Member extends UserWithRoles {
 
     public Member(String user, String password, String email,
                   String firstName, String lastName, String street, String city, String zip) {
-        this.username = user;
-        this.password = password;
-        this.email = email;
+        super(user, password, email);
         this.firstName = firstName;
         this.lastName = lastName;
         this.street = street;
@@ -29,34 +30,25 @@ public class Member {
         this.zip = zip;
     }
 
-    @Id
-    private String username;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column()
-    private String password;
-
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String street;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String city;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String zip;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private boolean approved;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private int ranking;
 
     @CreationTimestamp

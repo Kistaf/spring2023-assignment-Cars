@@ -33,9 +33,9 @@ public class Reservation {
         this.reserved_car = c;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Member member;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Car reserved_car;
 }
