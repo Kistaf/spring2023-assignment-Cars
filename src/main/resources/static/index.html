@@ -36,7 +36,8 @@
                 newRow.insertCell(3).appendChild(document.createTextNode(`${car.pricePrDay}`))
             })
         }).catch(() => {
-            console.log("something went wrong")
+            console.log("Something went wrong...")
+            console.log("If you are using the hosted version, this is likely due to the fetch URL being set to localhost")
         })
     }
     window.onload = () => {
