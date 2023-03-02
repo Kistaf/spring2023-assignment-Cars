@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/reservations")
 public class ReservationController {
 
