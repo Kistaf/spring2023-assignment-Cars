@@ -27,8 +27,8 @@ class CarServiceH2Test {
 
     @BeforeEach
     void setUp() {
-        Car car1 = new Car(1L, "Mercedes", "AMG ONE", 30000);
-        Car car2 = new Car(2L, "Mercedes", "AMG GT", 20000);
+        Car car1 = new Car(1L, "Mercedes", "AMG ONE", 30000, 0);
+        Car car2 = new Car(2L, "Mercedes", "AMG GT", 20000, 0);
         carRepository.save(car1);
         carRepository.save(car2);
         carService = new CarService(carRepository);
@@ -65,7 +65,7 @@ class CarServiceH2Test {
 
     @Test
     void updateCarById() {
-        Car car = new Car(1L, "Porsche", "Cayenne", 30000);
+        Car car = new Car(1L, "Porsche", "Cayenne", 30000, 0);
         CarRequest request = new CarRequest(car);
         request.setId(1L);
         CarResponse response = carService.updateCar(request);

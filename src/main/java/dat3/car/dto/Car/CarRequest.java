@@ -13,16 +13,18 @@ public class CarRequest {
     private String brand;
     private String model;
     private double pricePrDay;
+    private double bestDiscount;
 
 
     public static Car getCarEntity(CarRequest c) {
-        return new Car(c.getId(), c.getBrand(), c.getModel(), c.getPricePrDay());
+        return new Car(c.getId(), c.getBrand(), c.getModel(), c.getPricePrDay(), c.getBestDiscount());
     }
 
     public CarRequest(Car c) {
         this.brand = c.getBrand();
         this.model = c.getModel();
         this.pricePrDay = c.getPricePrDay();
+        this.bestDiscount = c.getBestDiscount();
     }
 }
 

@@ -17,11 +17,12 @@ import java.util.List;
 @Entity
 public class Car {
 
-    public Car(Long id, String brand, String model, double pricePrDay) {
+    public Car(Long id, String brand, String model, double pricePrDay, double bestDiscount) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
+        this.bestDiscount = bestDiscount;
     }
 
 
@@ -39,7 +40,7 @@ public class Car {
     private double pricePrDay;
 
     @Column(name = "max_discount")
-    private int bestDiscount;
+    private double bestDiscount;
 
     @CreationTimestamp
     private LocalDateTime created;

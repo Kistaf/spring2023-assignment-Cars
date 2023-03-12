@@ -18,7 +18,7 @@ public class CarResponse {
     private String brand;
     private String model;
     private double pricePrDay;
-    private Integer bestDiscount;
+    private double bestDiscount;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime created;

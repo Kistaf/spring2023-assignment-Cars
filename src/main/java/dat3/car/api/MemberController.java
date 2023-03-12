@@ -25,6 +25,18 @@ class MemberController {
         return memberService.getMembers(false);
     }
 
+    // DELETE ONCE SECURITY IS IMPLEMENTED
+    @GetMapping("admin")
+    List<MemberResponse> getTempAdminMembers() {
+        return memberService.getMembers(true);
+    }
+
+    // DELETE ONCE SECURITY IS IMPLEMENTED
+    @GetMapping("admin/{username}")
+    MemberResponse getTempAdminMember(@PathVariable String username) {
+        return memberService.getMemberByUsername(username, true);
+    }
+
     // ADMIN
     @GetMapping(path = "/{username}")
     MemberResponse getMemberById(@PathVariable String username) throws Exception {

@@ -24,6 +24,18 @@ public class CarController {
         return carService.getCars(false);
     }
 
+    // TEMP REMOVE ONCE SECURITY IS IMPLEMENTED
+    @GetMapping("admin")
+    List<CarResponse> getTempAdminCars() {
+        return carService.getCars(true);
+    }
+
+    // TEMP REMOVE ONCE SECURITY IS IMPLEMENTED
+    @GetMapping("admin/{id}")
+    CarResponse getTempAdminCarById(@PathVariable Long id) {
+        return carService.getCarById(id, true);
+    }
+
     // ADMIN
     @GetMapping("/{id}")
     CarResponse getCarById(@PathVariable Long id) {
